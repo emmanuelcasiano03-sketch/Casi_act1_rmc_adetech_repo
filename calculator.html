@@ -1,0 +1,274 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Purple Calculator</title>
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+        }
+
+        body {
+            background: linear-gradient(135deg, #1a0f2e, #2d1b4a);
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            height: 100vh;
+            margin: 0;
+        }
+
+        .calculator {
+            background: rgba(255, 255, 255, 0.1);
+            backdrop-filter: blur(10px);
+            border-radius: 20px;
+            padding: 25px;
+            box-shadow: 0 20px 40px rgba(0, 0, 0, 0.3), 0 0 30px rgba(155, 93, 229, 0.3);
+            border: 1px solid rgba(255, 255, 255, 0.1);
+            width: 350px;
+        }
+
+        .display {
+            background: rgba(26, 15, 46, 0.8);
+            border-radius: 15px;
+            padding: 20px;
+            margin-bottom: 20px;
+            border: 1px solid rgba(255, 255, 255, 0.1);
+        }
+
+        #result {
+            width: 100%;
+            height: 60px;
+            background: transparent;
+            border: none;
+            color: white;
+            font-size: 2.5em;
+            text-align: right;
+            outline: none;
+            font-weight: 300;
+        }
+
+        #history {
+            color: #b19cd9;
+            font-size: 1em;
+            text-align: right;
+            min-height: 20px;
+            margin-bottom: 5px;
+            opacity: 0.8;
+        }
+
+        .buttons {
+            display: grid;
+            grid-template-columns: repeat(4, 1fr);
+            gap: 12px;
+        }
+
+        button {
+            padding: 20px;
+            font-size: 1.3em;
+            border: none;
+            border-radius: 15px;
+            cursor: pointer;
+            background: rgba(255, 255, 255, 0.05);
+            color: white;
+            transition: all 0.3s ease;
+            border: 1px solid rgba(255, 255, 255, 0.1);
+            box-shadow: 0 5px 15px rgba(0, 0, 0, 0.2);
+        }
+
+        button:hover {
+            background: rgba(155, 93, 229, 0.3);
+            transform: translateY(-3px);
+            box-shadow: 0 8px 20px rgba(155, 93, 229, 0.4);
+            border-color: rgba(155, 93, 229, 0.5);
+        }
+
+        button:active {
+            transform: translateY(0);
+        }
+
+        .operator {
+            background: rgba(155, 93, 229, 0.3);
+            color: #fff;
+            font-weight: bold;
+        }
+
+        .operator:hover {
+            background: rgba(155, 93, 229, 0.6);
+        }
+
+        .equals {
+            background: #9b5de5;
+            color: white;
+            grid-row: span 2;
+        }
+
+        .equals:hover {
+            background: #8b4ed5;
+        }
+
+        .zero {
+            grid-column: span 2;
+        }
+
+        .clear {
+            background: rgba(255, 87, 87, 0.3);
+            color: white;
+        }
+
+        .clear:hover {
+            background: rgba(255, 87, 87, 0.6);
+        }
+
+        .footer {
+            text-align: center;
+            margin-top: 20px;
+            color: #b19cd9;
+            font-size: 0.9em;
+        }
+    </style>
+</head>
+<body>
+    <div class="calculator">
+        <div class="display">
+            <div id="history"></div>
+            <input type="text" id="result" value="0" readonly>
+        </div>
+        
+        <div class="buttons">
+            <button class="clear" onclick="clearAll()">C</button>
+            <button class="clear" onclick="deleteLast()">⌫</button>
+            <button class="operator" onclick="appendOperator('%')">%</button>
+            <button class="operator" onclick="appendOperator('/')">÷</button>
+            
+            <button onclick="appendNumber('7')">7</button>
+            <button onclick="appendNumber('8')">8</button>
+            <button onclick="appendNumber('9')">9</button>
+            <button class="operator" onclick="appendOperator('*')">×</button>
+            
+            <button onclick="appendNumber('4')">4</button>
+            <button onclick="appendNumber('5')">5</button>
+            <button onclick="appendNumber('6')">6</button>
+            <button class="operator" onclick="appendOperator('-')">−</button>
+            
+            <button onclick="appendNumber('1')">1</button>
+            <button onclick="appendNumber('2')">2</button>
+            <button onclick="appendNumber('3')">3</button>
+            <button class="operator" onclick="appendOperator('+')">+</button>
+            
+            <button class="zero" onclick="appendNumber('0')">0</button>
+            <button onclick="appendNumber('.')">.</button>
+            <button class="equals" onclick="calculate()">=</button>
+        </div>
+        
+        <div class="footer">
+            Purple Calculator by Emmanuel Casiano
+        </div>
+    </div>
+
+    <script>
+        let display = document.getElementById('result');
+        let history = document.getElementById('history');
+        let currentInput = '';
+        let lastResult = '';
+
+        function appendNumber(num) {
+            if (currentInput === '0' && num !== '.') {
+                currentInput = num;
+            } else {
+                currentInput += num;
+            }
+            updateDisplay();
+        }
+
+        function appendOperator(op) {
+            if (currentInput === '' && lastResult !== '') {
+                currentInput = lastResult + op;
+            } else if (currentInput !== '' && !isNaN(currentInput.slice(-1))) {
+                currentInput += op;
+            } else if (currentInput.slice(-1) === '.' || currentInput.slice(-1) === '%') {
+                // Allow operators after . or %
+                currentInput += op;
+            }
+            updateDisplay();
+        }
+
+        function calculate() {
+            try {
+                if (currentInput === '') return;
+                
+                // Replace × with * and ÷ with / for evaluation
+                let expression = currentInput.replace(/×/g, '*').replace(/÷/g, '/');
+                
+                // Handle percentage
+                expression = expression.replace(/(\d+)%/g, '($1/100)');
+                
+                let result = eval(expression);
+                
+                if (result === Infinity || result === -Infinity || isNaN(result)) {
+                    throw new Error('Invalid calculation');
+                }
+                
+                history.innerText = currentInput + ' =';
+                currentInput = result.toString();
+                lastResult = result.toString();
+                updateDisplay();
+            } catch (error) {
+                history.innerText = 'Error';
+                currentInput = '';
+            }
+        }
+
+        function clearAll() {
+            currentInput = '';
+            lastResult = '';
+            history.innerText = '';
+            updateDisplay('0');
+        }
+
+        function deleteLast() {
+            currentInput = currentInput.slice(0, -1);
+            if (currentInput === '') {
+                updateDisplay('0');
+            } else {
+                updateDisplay();
+            }
+        }
+
+        function updateDisplay(value) {
+            if (value !== undefined) {
+                display.value = value;
+            } else {
+                display.value = currentInput || '0';
+            }
+        }
+
+        // Keyboard support
+        document.addEventListener('keydown', (event) => {
+            const key = event.key;
+            
+            if (key >= '0' && key <= '9') {
+                appendNumber(key);
+            } else if (key === '.') {
+                appendNumber('.');
+            } else if (key === '+' || key === '-' || key === '*' || key === '/') {
+                let op = key;
+                if (key === '*') op = '×';
+                if (key === '/') op = '÷';
+                appendOperator(op);
+            } else if (key === 'Enter' || key === '=') {
+                calculate();
+            } else if (key === 'Escape') {
+                clearAll();
+            } else if (key === 'Backspace') {
+                deleteLast();
+            } else if (key === '%') {
+                appendOperator('%');
+            }
+        });
+    </script>
+</body>
+</html>
