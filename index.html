@@ -43,5 +43,250 @@
     alert("🚀 Welcome to Modern Technology!");
   }
 </script>
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>✨ Interactive Space | Modern UI</title>
+
+<style>
+*{
+    margin:0;
+    padding:0;
+    box-sizing:border-box;
+}
+
+body{
+    background-color:#0A192F;
+    font-family:'Segoe UI',Tahoma,Geneva,Verdana,sans-serif;
+    min-height:100vh;
+    color:white;
+    position:relative;
+    overflow-x:hidden; /* FIXED */
+    padding:20px;
+}
+
+/* Stars */
+.stars{
+    position:absolute;
+    top:0;
+    left:0;
+    width:100%;
+    height:100%;
+    pointer-events:none;
+}
+
+.star{
+    position:absolute;
+    background-color:rgba(255,255,255,0.3);
+    border-radius:50%;
+    animation:twinkle 3s infinite;
+}
+
+@keyframes twinkle{
+    0%,100%{opacity:0.2;transform:scale(0.8);}
+    50%{opacity:1;transform:scale(1.2);}
+}
+
+/* Container */
+.container{
+    background:rgba(10,25,47,0.7);
+    backdrop-filter:blur(10px);
+    border:1px solid rgba(0,181,173,0.2);
+    border-radius:30px;
+    padding:50px;
+    width:90%;
+    max-width:700px;
+    margin:20px auto;
+    text-align:center;
+    z-index:10;
+    position:relative;
+}
+
+h1{
+    font-size:2.8em;
+    margin-bottom:15px;
+    background:linear-gradient(135deg,#fff,#00B5AD);
+    -webkit-background-clip:text;
+    -webkit-text-fill-color:transparent;
+}
+
+.subtitle{
+    color:#8892B0;
+    margin-bottom:40px;
+}
+
+/* Features */
+.features{
+    display:flex;
+    justify-content:space-around;
+    margin:40px 0;
+    flex-wrap:wrap;
+    gap:20px;
+}
+
+.feature-item{
+    flex:1;
+    min-width:120px;
+    padding:20px;
+    background:rgba(0,181,173,0.05);
+    border-radius:20px;
+    border:1px solid rgba(0,181,173,0.2);
+    transition:0.3s;
+}
+
+.feature-item:hover{
+    transform:translateY(-5px);
+    border-color:#00B5AD;
+}
+
+.feature-number{
+    font-size:2em;
+    color:#00B5AD;
+    font-weight:bold;
+}
+
+.feature-text{
+    color:#CCD6F6;
+    font-size:0.9em;
+}
+
+/* Buttons */
+.button-group{
+    display:flex;
+    gap:20px;
+    justify-content:center;
+    flex-wrap:wrap;
+    margin:40px 0;
+}
+
+.btn{
+    padding:15px 40px;
+    font-size:1.1em;
+    font-weight:600;
+    border:none;
+    border-radius:50px;
+    cursor:pointer;
+    transition:0.3s;
+}
+
+.btn-teal{
+    background:#00B5AD;
+    color:#0A192F;
+}
+
+.btn-teal:hover{
+    background:#00CCC2;
+    transform:scale(1.05);
+}
+
+.btn-outline-teal{
+    background:transparent;
+    color:#00B5AD;
+    border:2px solid #00B5AD;
+}
+
+.btn-outline-teal:hover{
+    background:#00B5AD;
+    color:#0A192F;
+    transform:scale(1.05);
+}
+
+.message-area{
+    background:rgba(0,181,173,0.1);
+    padding:20px;
+    border-radius:15px;
+    margin:20px 0;
+    min-height:80px;
+    color:#CCD6F6;
+}
+
+.counter{
+    font-size:3em;
+    color:#00B5AD;
+    margin:10px 0;
+}
+</style>
+</head>
+
+<body>
+
+<div class="stars" id="stars"></div>
+
+<div class="container">
+
+<h1>✨ SPACE INTERACTIVE</h1>
+<div class="subtitle">Experience the future of web interactions</div>
+
+<div class="features">
+<div class="feature-item">
+<div class="feature-number">500+</div>
+<div class="feature-text">Active Users</div>
+</div>
+<div class="feature-item">
+<div class="feature-number">24/7</div>
+<div class="feature-text">Support</div>
+</div>
+<div class="feature-item">
+<div class="feature-number">∞</div>
+<div class="feature-text">Possibilities</div>
+</div>
+</div>
+
+<div class="button-group">
+<button class="btn btn-teal" onclick="showWelcomeMessage()">🚀 Launch</button>
+<button class="btn btn-outline-teal" onclick="showSurprise()">⭐ Discover</button>
+</div>
+
+<div class="message-area" id="messageDisplay">
+Click a button to start your journey...
+</div>
+
+<div>
+<div>SPACE EXPLORATIONS</div>
+<div class="counter" id="counter">0</div>
+<button class="btn btn-teal" onclick="incrementCounter()" style="padding:10px 25px;font-size:0.9em;">🌟 Explore Universe</button>
+</div>
+
+</div>
+<script>
+function createStars(){
+const starsContainer=document.getElementById('stars');
+for(let i=0;i<100;i++){
+const star=document.createElement('div');
+star.className='star';
+star.style.left=Math.random()*100+'%';
+star.style.top=Math.random()*100+'%';
+star.style.width=star.style.height=Math.random()*3+1+'px';
+star.style.animationDelay=Math.random()*3+'s';
+starsContainer.appendChild(star);
+}
+}
+
+function showWelcomeMessage(){
+document.getElementById('messageDisplay').innerHTML=
+
+"🚀 Welcome aboard! You've successfully launched!";
+}
+
+function showSurprise(){
+const messages=[
+'⭐ You discovered a hidden star!',
+'🌌 The galaxy is full of possibilities!',
+'🪐 Welcome to the space station!',
+'☄️ A shooting star just passed by!',
+'👾 You found an alien friend!'
+];
+document.getElementById('messageDisplay').innerHTML=
+messages[Math.floor(Math.random()*messages.length)];
+}
+
+let count=0;
+function incrementCounter(){
+count++;
+document.getElementById('counter').innerHTML=count;
+}
+
+createStars();
+</script>
+
+>>>>>>> b9c96457ff7545c31ad9f108d9d83c11ddef03fb
 </body>
 </html>
