@@ -2,50 +2,41 @@
 <html lang="en">
 <head>
   <meta charset="UTF-8">
-  <title>Minimalist Tech Button</title>
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Modern Tech Minimalist</title>
   <style>
-    /* Full screen, dark tech-inspired background */
     body {
-      margin: 0;
-      height: 100vh;
+      font-family: "Helvetica Neue", sans-serif;
+      background-color: #f9f9f9;
       display: flex;
+      flex-direction: column;
       justify-content: center;
       align-items: center;
-      background: #0f111a; /* dark background */
-      font-family: 'Segoe UI', Roboto, sans-serif;
+      height: 100vh;
+      margin: 0;
+      color: #333;
     }
-
-    /* Minimalist modern button */
     button {
-      padding: 15px 40px;
-      font-size: 18px;
-      color: #fff;
-      background: linear-gradient(135deg, #00d4ff, #0066ff);
+      padding: 12px 24px;
+      font-size: 16px;
       border: none;
-      border-radius: 25px;
+      border-radius: 6px;
       cursor: pointer;
-      box-shadow: 0 5px 15px rgba(0, 102, 255, 0.4);
-      transition: transform 0.2s ease, box-shadow 0.2s ease;
+      background-color: #0077cc;
+      color: #fff;
+      transition: background 0.3s;
     }
-
-    /* Hover and active effects */
     button:hover {
-      transform: translateY(-3px);
-      box-shadow: 0 8px 20px rgba(0, 102, 255, 0.6);
+      background-color: #005fa3;
     }
-    button:active {
-      transform: scale(0.97);
+    h1 {
+      margin-bottom: 24px;
+      font-weight: 400;
     }
   </style>
 </head>
 <body>
-  <button onclick="showAlert()">Click Me</button>
-
-  <script>
-    function showAlert() {
-      alert("🚀 Welcome to Minimalist Modern Technology!");
-    }
-  </script>
+  <h1>Welcome to Modern Tech</h1>
+  <button onclick="alert('Hello! You clicked the button.')">Click Me</button>
 </body>
 </html>
