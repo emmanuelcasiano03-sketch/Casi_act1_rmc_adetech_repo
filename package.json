@@ -1,0 +1,13 @@
+{
+  "name": "simple-node-server",
+  "version": "1.0.0",
+  "description": "A simple Node.js server for GitHub Activity 2",
+  "main": "server.js",
+  "scripts": {
+    "start": "node server.js",
+    "dev": "node server.js"
+  },
+  "keywords": ["nodejs", "server", "github-activity"],
+  "author": "Emmanuel Casiano",
+  "license": "MIT"
+}
