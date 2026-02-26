@@ -1,0 +1,48 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<title>Modern Technology Button</title>
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<style>
+  body {
+    margin: 0;
+    height: 100vh;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    background: linear-gradient(135deg, #0f2027, #203a43, #2c5364);
+    font-family: Arial, Helvetica, sans-serif;
+  }
+
+  button {
+    padding: 15px 35px;
+    font-size: 18px;
+    border: none;
+    border-radius: 30px;
+    cursor: pointer;
+    color: white;
+    background: linear-gradient(135deg, #00c6ff, #0072ff);
+    box-shadow: 0 10px 25px rgba(0,0,0,0.3);
+    transition: transform 0.2s ease, box-shadow 0.2s ease;
+  }
+
+  button:hover {
+    transform: translateY(-3px);
+  }
+
+  button:active {
+    transform: scale(0.98);
+  }
+</style>
+</head>
+<body>
+<button onclick="showAlert()">Click Me</button>
+<script>
+  function showAlert() {
+    alert("🚀 Welcome to Modern Technology!");
+  }
+</script>
+</body>
+</html>
+
